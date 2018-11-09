@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 
 public class MyView extends View  {
@@ -23,8 +24,15 @@ public class MyView extends View  {
         paint.setColor(Color.RED);
         paint.setStrokeWidth(4);
         canvas.drawLine(0,0, 400, 400, paint);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        float x = event.getX();
+        float y = event.getY();
+        Log.v("brad", x + " x " + y);
 
 
-
+        return true; //super.onTouchEvent(event);
     }
 }
