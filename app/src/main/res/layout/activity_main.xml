@@ -30,7 +30,7 @@
             android:text="Redo"
             />
     </LinearLayout>
-    <View
+    <tw.brad.myviewtest.MyView
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="4"
