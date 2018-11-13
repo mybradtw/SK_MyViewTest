@@ -4,16 +4,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
     private MyView myView;
     private SeekBar seekBar;
+    private TextView lineNum;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        lineNum = findViewById(R.id.lineNumber);
         myView = findViewById(R.id.myView);
         seekBar= findViewById(R.id.seekBar);
         seekBar.setMax(16);
@@ -46,5 +50,9 @@ public class MainActivity extends AppCompatActivity {
     }
     public void redo(View view) {
         myView.redo();
+    }
+
+    public void showLineNum(int n){
+        lineNum.setText("" + n);
     }
 }

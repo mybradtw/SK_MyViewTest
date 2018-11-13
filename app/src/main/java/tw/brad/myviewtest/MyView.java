@@ -8,6 +8,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.TextView;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -15,10 +16,14 @@ import java.util.LinkedList;
 public class MyView extends View  {
     private LinkedList<LinkedList<HashMap<String,Float>>> lines, recycler;
     private int lineWidth;
+    private MainActivity mainActivity;
 
 
     public MyView(Context context,  AttributeSet attrs) {
         super(context, attrs);
+
+        mainActivity = (MainActivity)context;
+
         setBackgroundColor(Color.GREEN);
 
         lines = new LinkedList<>();
@@ -63,6 +68,10 @@ public class MyView extends View  {
         if (event.getAction() == MotionEvent.ACTION_MOVE ||
                 event.getAction() == MotionEvent.ACTION_DOWN){
             addNewPoint(ex, ey);
+        }
+
+        if (event.getAction() == MotionEvent.ACTION_UP){
+            mainActivity.showLineNum(lines.size());
         }
 
         invalidate();   // repaint => onDraw()
