@@ -14,6 +14,7 @@ import java.util.LinkedList;
 
 public class MyView extends View  {
     private LinkedList<LinkedList<HashMap<String,Float>>> lines, recycler;
+    private int lineWidth;
 
 
     public MyView(Context context,  AttributeSet attrs) {
@@ -32,14 +33,18 @@ public class MyView extends View  {
 
         Paint paint = new Paint();
         paint.setColor(Color.BLUE);
-        paint.setStrokeWidth(8);
 
         for (LinkedList<HashMap<String,Float>> line :lines){
             for (int i=1; i<line.size(); i++) {
-                HashMap<String,Float> p0 = line.get(i-1);
-                HashMap<String,Float> p1 = line.get(i);
-                canvas.drawLine(p0.get("x"), p0.get("y"),
-                        p1.get("x"), p1.get("y"), paint);
+                if (i == 1){
+                    HashMap<String,Float> attr = line.get(i-1);
+                    paint.setStrokeWidth(attr.get("width"));
+                }else {
+                    HashMap<String, Float> p0 = line.get(i - 1);
+                    HashMap<String, Float> p1 = line.get(i);
+                    canvas.drawLine(p0.get("x"), p0.get("y"),
+                            p1.get("x"), p1.get("y"), paint);
+                }
             }
 
         }
@@ -50,14 +55,6 @@ public class MyView extends View  {
     public boolean onTouchEvent(MotionEvent event) {
         float ex = event.getX();
         float ey = event.getY();
-
-//        switch (event.getAction()){
-//            case MotionEvent.ACTION_DOWN:
-//                addNewLine();
-//            case MotionEvent.ACTION_MOVE:
-//                addNewPoint(ex, ey);
-//                break;
-//        }
 
         if (event.getAction() == MotionEvent.ACTION_DOWN){
             addNewLine();
@@ -75,6 +72,11 @@ public class MyView extends View  {
 
     private void addNewLine(){
         LinkedList<HashMap<String,Float>> line = new LinkedList<>();
+
+        HashMap<String,Float> data = new HashMap<>();
+        data.put("width", (float)lineWidth);
+        line.add(data);
+
         lines.add(line);
         recycler.clear();
     }
@@ -102,6 +104,11 @@ public class MyView extends View  {
             lines.add(recycler.removeLast());
             invalidate();
         }
+    }
+
+    public void chLineWidth(int newWidth){
+        lineWidth = newWidth;
+        //invalidate();
     }
 
 
