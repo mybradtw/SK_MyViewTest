@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 public class MyView extends View  {
-    private LinkedList<LinkedList<HashMap<String,Float>>> lines;
+    private LinkedList<LinkedList<HashMap<String,Float>>> lines, recycler;
 
 
     public MyView(Context context,  AttributeSet attrs) {
@@ -21,6 +21,7 @@ public class MyView extends View  {
         setBackgroundColor(Color.GREEN);
 
         lines = new LinkedList<>();
+        recycler = new LinkedList<>();
 
     }
 
@@ -50,6 +51,14 @@ public class MyView extends View  {
         float ex = event.getX();
         float ey = event.getY();
 
+//        switch (event.getAction()){
+//            case MotionEvent.ACTION_DOWN:
+//                addNewLine();
+//            case MotionEvent.ACTION_MOVE:
+//                addNewPoint(ex, ey);
+//                break;
+//        }
+
         if (event.getAction() == MotionEvent.ACTION_DOWN){
             addNewLine();
         }
@@ -67,6 +76,7 @@ public class MyView extends View  {
     private void addNewLine(){
         LinkedList<HashMap<String,Float>> line = new LinkedList<>();
         lines.add(line);
+        recycler.clear();
     }
 
     private void addNewPoint(float x, float y){
@@ -75,5 +85,24 @@ public class MyView extends View  {
         point.put("y", y);
         lines.getLast().add(point);
     }
+
+    public void clear(){
+        lines.clear();
+        invalidate();
+    }
+
+    public void undo(){
+        if (lines.size()>0) {
+            recycler.add(lines.removeLast());
+            invalidate();
+        }
+    }
+    public void redo(){
+        if (recycler.size()>0) {
+            lines.add(recycler.removeLast());
+            invalidate();
+        }
+    }
+
 
 }

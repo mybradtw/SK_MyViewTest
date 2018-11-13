@@ -18,19 +18,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Clear"
+            android:onClick="clear"
             />
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Undo"
+            android:onClick="undo"
             />
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Redo"
+            android:onClick="redo"
             />
     </LinearLayout>
     <tw.brad.myviewtest.MyView
+        android:id="@+id/myView"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="4"
